@@ -51,8 +51,6 @@ type AnimationOptions = {
 };
 ```
 
-[About easing](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/easing)
-
 ## Examples
 
 - https://codesandbox.io/s/zealous-rubin-fgdhk?file=/src/use-animation/index.ts
