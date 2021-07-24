@@ -48,9 +48,9 @@
   },
   "scripts": {
     "build": "yarn build:preact && yarn build:react",
-    "build:react": "microbundle --external react --name use-web-animation --output dist/",
-    "build:preact": "microbundle --external preact --name use-web-animation --output preact/dist --alias react=./preact/preact.ts",
-    "build:ci": "microbundle --define process.env.NODE_ENV=production --external react --name use-web-animation --output dist/",
+    "build:react": "microbundle --format cjs,umd,modern --external react --name use-web-animation --output dist/",
+    "build:preact": "microbundle --format cjs,umd,modern --external preact --name use-web-animation --output preact/dist --alias react=./preact/preact.ts",
+    "build:ci": "microbundle --format cjs,umd,modern --define process.env.NODE_ENV=production --external react --name use-web-animation --output dist/",
     "prepublishOnly": "yarn build"
   },
   "prettier": {
