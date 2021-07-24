@@ -1,7 +1,5 @@
 import { useRef, useLayoutEffect, useCallback, MutableRefObject } from "react";
 
-const DEFAULT_DURATION = 750;
-
 export type AnimationOptions = {
   duration?: number;
   infinite?: boolean;
