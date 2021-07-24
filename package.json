@@ -50,9 +50,9 @@
   },
   "scripts": {
     "build": "rimraf dist && yarn build:preact && yarn build:react",
-    "build:react": "microbundle --define process.env.NODE_ENV=production --external react --name use-web-animation --no-compress --output dist/",
-    "build:preact": "microbundle --define process.env.NODE_ENV=production --external preact --name use-web-animation --no-compress --output preact/dist --alias react=./preact/preact.ts",
-    "build:ci": "microbundle --define process.env.NODE_ENV=production --external preact --name use-web-animation --output dist/"
+    "build:react": "microbundle --external react --name use-web-animation --output dist/",
+    "build:preact": "microbundle --external preact --name use-web-animation --output preact/dist --alias react=./preact/preact.ts",
+    "build:ci": "microbundle --define process.env.NODE_ENV=production --external react --name use-web-animation --output dist/"
   },
   "prettier": {
     "singleQuote": true,

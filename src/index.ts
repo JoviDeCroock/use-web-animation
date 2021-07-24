@@ -45,13 +45,11 @@ export const useWebAnimation = ({
       }
 
       const timingObject: KeyframeAnimationOptions = {
-        duration: duration || DEFAULT_DURATION,
+        duration: duration || 750,
         iterations: 1,
-        delay: delay || 0,
+        delay,
         easing,
-        direction: "normal"
       };
-      reverse.current = false;
 
       callback.current = () => {
         if (infinite) {
