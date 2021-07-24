@@ -35,6 +35,10 @@ const RotatingAnimation = () => {
 };
 ```
 
+The second returned argument is a `play` function which can be used to imperatively
+start playing a paused animation. This function also accepts an `onComplete` callback
+which will be called when the animation completes.
+
 Accepted properties:
 
 ```ts
