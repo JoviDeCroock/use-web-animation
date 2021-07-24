@@ -37,7 +37,7 @@ export const useWebAnimation = ({
   const reverse = useRef(false);
 
   const animate = useCallback(
-    (onComplete?: any) => {
+    (onComplete?: (() => void)) => {
       if (!ref.current) {
         if (process.env.NODE_ENV !== "production") {
           throw new Error("Please apply the ref to a dom-element.");
@@ -52,7 +52,7 @@ export const useWebAnimation = ({
       const timingObject: KeyframeAnimationOptions = {
         duration: duration || 750,
         iterations: 1,
-        delay: delay,
+        delay,
         easing
       };
 
@@ -73,19 +73,20 @@ export const useWebAnimation = ({
           if (animation.current && animation.current.playState === "running") {
             reverse.current = !reverse.current;
             animation.current.reverse();
-            animation.current!.removeEventListener("finish", callback.current);
+            animation.current.removeEventListener("finish", callback.current);
             animation.current.addEventListener("finish", callback.current);
           } else if (animation.current) {
             ref.current!.style[property as any] = getValue(reverse.current ? from : to);
-            if (onComplete) {
-              onComplete();
-            }
+
+            if (onComplete) onComplete();
+
             if (animation.current && callback.current) {
-              animation.current!.removeEventListener(
+              animation.current.removeEventListener(
                 "finish",
                 callback.current
               );
             }
+
             animation.current = undefined;
             callback.current = undefined;
           } else {
@@ -104,16 +105,14 @@ export const useWebAnimation = ({
   );
 
   useLayoutEffect(() => {
-    if (!pause) {
-      animate();
-    }
+    if (!pause) animate();
 
     return () => {
       if (animation.current && !pause) {
-        if (animation.current && callback.current) {
-          animation.current!.removeEventListener("finish", callback.current);
-        }
         animation.current.cancel();
+        if (animation.current && callback.current) {
+          animation.current.removeEventListener("finish", callback.current);
+        }
       }
     };
   }, [pause]);
