@@ -1,7 +1,7 @@
 # use-web-animation
 
-[![npm version](https://badgen.net/npm/v/hoofd)](https://www.npmjs.com/package/hoofd)
-[![Bundle size](https://badgen.net/bundlephobia/minzip/hoofd)](https://badgen.net/bundlephobia/minzip/hoofd)
+[![npm version](https://badgen.net/npm/v/use-web-animation)](https://www.npmjs.com/package/use-web-animation)
+[![Bundle size](https://badgen.net/bundlephobia/minzip/use-web-animation)](https://badgen.net/bundlephobia/minzip/use-web-animation)
 
 This project aims to provide an API to use the [web-animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)
 
