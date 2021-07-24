@@ -1,6 +1,6 @@
 {
   "name": "use-web-animation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Hooks to leverage the web-animations API",
   "license": "MIT",
   "author": "jdecroock <decroockjovi@gmail.com> (https://twitter.com/JoviDeC)",
@@ -49,10 +49,11 @@
     }
   },
   "scripts": {
-    "build": "rimraf dist && yarn build:preact && yarn build:react",
+    "build": "yarn build:preact && yarn build:react",
     "build:react": "microbundle --external react --name use-web-animation --output dist/",
     "build:preact": "microbundle --external preact --name use-web-animation --output preact/dist --alias react=./preact/preact.ts",
-    "build:ci": "microbundle --define process.env.NODE_ENV=production --external react --name use-web-animation --output dist/"
+    "build:ci": "microbundle --define process.env.NODE_ENV=production --external react --name use-web-animation --output dist/",
+    "prepublishOnly": "yarn build"
   },
   "prettier": {
     "singleQuote": true,
