@@ -28,8 +28,6 @@
   "sideEffects": false,
   "main": "./dist/use-web-animation.js",
   "browser": "./dist/use-web-animation.umd.js",
-  "umd:main": "./dist/use-web-animation.umd.js",
-  "jsnext:main": "./dist/use-web-animation.modern.js",
   "module": "./dist/use-web-animation.module.js",
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
