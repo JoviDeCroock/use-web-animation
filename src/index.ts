@@ -1,4 +1,9 @@
-import { useRef, useLayoutEffect, useCallback, MutableRefObject } from "react";
+import {
+  useRef,
+  useLayoutEffect,
+  useCallback,
+  MutableRefObject,
+} from "react";
 
 export type AnimationOptions = {
   duration?: number;
@@ -22,17 +27,20 @@ export const useWebAnimation = ({
   delay,
   easing,
   pause
-}: AnimationOptions): [MutableRefObject<HTMLElement | undefined>, () => void] => {
+}: AnimationOptions): [
+  MutableRefObject<HTMLElement | undefined>,
+  () => void
+] => {
   const ref = useRef<HTMLElement>();
   const callback = useRef<any>();
   const animation = useRef<Animation | undefined>();
   const reverse = useRef(false);
 
   const animate = useCallback(
-    (onComplete?: (() => void)) => {
-      if (!ref.current || !ref.current.animate) {
-        if (process.env.NODE_ENV !== 'production') {
-          throw new Error('Please apply the ref to a dom-element.');
+    (onComplete?: any) => {
+      if (!ref.current) {
+        if (process.env.NODE_ENV !== "production") {
+          throw new Error("Please apply the ref to a dom-element.");
         }
         return;
       }
@@ -41,27 +49,34 @@ export const useWebAnimation = ({
         ref.current!.style[property as any] = getValue(to);
         return;
       }
-
       const timingObject: KeyframeAnimationOptions = {
         duration: duration || 750,
         iterations: 1,
-        delay,
-        easing,
+        delay: delay,
+        easing
       };
 
       callback.current = () => {
         if (infinite) {
-          timingObject.direction = reverse.current ? "reverse" : "normal";
           reverse.current = !reverse.current;
-
-          animation.current = ref.current!.animate(
-            [{ [property]: getValue(from) }, { [property]: getValue(to) }],
-            timingObject
-          );
-          animation.current.addEventListener("finish", callback.current);
-        } else {
           if (animation.current) {
-            ref.current!.style[property as any] = getValue(to);
+            ref.current!.style[property as any] = getValue(reverse.current ? from : to);
+            animation.current.reverse();
+          } else {
+            animation.current = ref.current!.animate(
+              [{ [property]: getValue(from) }, { [property]: getValue(to) }],
+              timingObject
+            );
+            animation.current.addEventListener("finish", callback.current);
+          }
+        } else {
+          if (animation.current && animation.current.playState === "running") {
+            reverse.current = !reverse.current;
+            animation.current.reverse();
+            animation.current!.removeEventListener("finish", callback.current);
+            animation.current.addEventListener("finish", callback.current);
+          } else if (animation.current) {
+            ref.current!.style[property as any] = getValue(reverse.current ? from : to);
             if (onComplete) {
               onComplete();
             }
