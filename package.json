@@ -50,9 +50,9 @@
   },
   "scripts": {
     "build": "rimraf dist && yarn build:preact && yarn build:react",
-    "build:react": "microbundle --define process.env.NODE_ENV=production --external react --name use-web-animation --no-compress --output dist/",
-    "build:preact": "microbundle --define process.env.NODE_ENV=production --external preact --name use-web-animation --no-compress --output preact/dist --alias react=./preact/preact.ts",
-    "build:ci": "microbundle --define process.env.NODE_ENV=production --external preact --name use-web-animation --output dist/"
+    "build:react": "microbundle --external react --name use-web-animation --output dist/",
+    "build:preact": "microbundle --external preact --name use-web-animation --output preact/dist --alias react=./preact/preact.ts",
+    "build:ci": "microbundle --define process.env.NODE_ENV=production --external react --name use-web-animation --output dist/"
   },
   "prettier": {
     "singleQuote": true,
@@ -75,15 +75,15 @@
     }
   },
   "devDependencies": {
-    "@types/react": "16.9.16",
-    "@types/react-dom": "16.9.4",
-    "@typescript-eslint/eslint-plugin": "2.11.0",
-    "@typescript-eslint/parser": "2.11.0",
-    "eslint": "6.7.2",
-    "eslint-config-prettier": "6.7.0",
-    "eslint-plugin-react": "7.17.0",
-    "husky": "3.1.0",
-    "lint-staged": "9.5.0",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.24.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.0",
     "microbundle": "^0.13.3",
     "preact": "^10.5.14",
     "prettier": "^2.3.2",
