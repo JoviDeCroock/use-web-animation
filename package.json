@@ -1,0 +1,95 @@
+{
+  "name": "use-web-animation",
+  "version": "0.1.0",
+  "description": "Hooks to leverage the web-animations API",
+  "license": "MIT",
+  "author": "jdecroock <decroockjovi@gmail.com> (https://twitter.com/JoviDeC)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoviDeCroock/hoofd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JoviDeCroock/hoofd/issues"
+  },
+  "homepage": "https://github.com/JoviDeCroock/hoofd#readme",
+  "keywords": [
+    "hoofd",
+    "react",
+    "preact",
+    "document",
+    "head",
+    "title",
+    "meta",
+    "link",
+    "html",
+    "language",
+    "seo"
+  ],
+  "sideEffects": false,
+  "main": "./dist/use-web-animation.js",
+  "browser": "./dist/use-web-animation.umd.js",
+  "umd:main": "./dist/use-web-animation.umd.js",
+  "jsnext:main": "./dist/use-web-animation.modern.js",
+  "module": "./dist/use-web-animation.module.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/use-web-animation.module.js",
+      "umd": "./dist/use-web-animation.umd.js",
+      "import": "./dist/use-web-animation.module.js",
+      "require": "./dist/use-web-animation.js"
+    },
+    "./preact": {
+      "browser": "./preact/dist/use-web-animation.module.js",
+      "umd": "./preact/dist/use-web-animation.umd.js",
+      "import": "./preact/dist/use-web-animation.module.js",
+      "require": "./preact/dist/use-web-animation.js"
+    }
+  },
+  "scripts": {
+    "build": "rimraf dist && yarn build:preact && yarn build:react",
+    "build:react": "microbundle --define process.env.NODE_ENV=production --external react --name use-web-animation --no-compress --output dist/",
+    "build:preact": "microbundle --define process.env.NODE_ENV=production --external preact --name use-web-animation --no-compress --output preact/dist --alias react=./preact/preact.ts",
+    "build:ci": "microbundle --define process.env.NODE_ENV=production --external preact --name use-web-animation --output dist/"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "lint-staged": {
+    "*.{json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "@types/react": "16.9.16",
+    "@types/react-dom": "16.9.4",
+    "@typescript-eslint/eslint-plugin": "2.11.0",
+    "@typescript-eslint/parser": "2.11.0",
+    "eslint": "6.7.2",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-react": "7.17.0",
+    "husky": "3.1.0",
+    "lint-staged": "9.5.0",
+    "microbundle": "^0.13.3",
+    "preact": "^10.5.14",
+    "prettier": "^2.3.2",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.5"
+  }
+}
