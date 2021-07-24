@@ -1,6 +1,6 @@
 {
   "name": "use-web-animation",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Hooks to leverage the web-animations API",
   "license": "MIT",
   "author": "jdecroock <decroockjovi@gmail.com> (https://twitter.com/JoviDeC)",
