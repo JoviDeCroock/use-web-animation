@@ -5,6 +5,10 @@
 
 This project aims to provide an API to use the [web-animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)
 
+> This isn't supported in IE11 without a polyfill, in IE11 this library will just execute the ending value.
+
+> If you want to use "native-preact" you can import it with "use-web-animation/preact"
+
 ## useWebAnimation
 
 This package exports 1 function called `useWebAnimation` which allows you to manipulate stylistic properties.
