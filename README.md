@@ -28,7 +28,6 @@ const RotatingAnimation = () => {
         backgroundColor: "red",
         width: 100,
         height: 100,
-        marginRight: 12
       }}
     />
   );
