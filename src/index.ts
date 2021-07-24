@@ -3,7 +3,6 @@ import {
   useLayoutEffect,
   useCallback,
   MutableRefObject,
-  useEffect,
 } from "react";
 
 export type AnimationOptions = {
