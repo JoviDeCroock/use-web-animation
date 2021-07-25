@@ -1,6 +1,6 @@
 {
   "name": "use-web-animation",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Hooks to leverage the web-animations API",
   "license": "MIT",
   "author": "jdecroock <decroockjovi@gmail.com> (https://twitter.com/JoviDeC)",
@@ -13,17 +13,10 @@
   },
   "homepage": "https://github.com/JoviDeCroock/hoofd#readme",
   "keywords": [
-    "hoofd",
     "react",
     "preact",
-    "document",
-    "head",
-    "title",
-    "meta",
-    "link",
-    "html",
-    "language",
-    "seo"
+    "web-animations",
+    "animations"
   ],
   "sideEffects": false,
   "main": "./dist/use-web-animation.js",
