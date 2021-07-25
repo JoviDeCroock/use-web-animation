@@ -17,17 +17,7 @@ export type AnimationOptions = {
   property: string;
 };
 
-export const useWebAnimation = ({
-  duration,
-  infinite,
-  getValue,
-  from,
-  to,
-  property,
-  delay,
-  easing,
-  pause
-}: AnimationOptions): [
+export const useWebAnimation = (options: AnimationOptions): [
   MutableRefObject<HTMLElement | undefined>,
   () => void
 ] => {
@@ -46,25 +36,24 @@ export const useWebAnimation = ({
       }
 
       if (!ref.current.animate) {
-        ref.current!.style[property as any] = getValue(to);
+        ref.current!.style[options.property as any] = options.getValue(options.to);
         return;
       }
       const timingObject: KeyframeAnimationOptions = {
-        duration: duration || 750,
-        iterations: 1,
-        delay,
-        easing
+        duration: options.duration || 750,
+        delay: options.delay,
+        easing: options.easing
       };
 
       callback.current = () => {
-        if (infinite) {
+        if (options.infinite) {
           reverse.current = !reverse.current;
           if (animation.current) {
-            ref.current!.style[property as any] = getValue(reverse.current ? from : to);
+            ref.current!.style[options.property as any] = options.getValue(reverse.current ? options.from : options.to);
             animation.current.reverse();
           } else {
             animation.current = ref.current!.animate(
-              [{ [property]: getValue(from) }, { [property]: getValue(to) }],
+              [{ [options.property]: options.getValue(options.from) }, { [options.property]: options.getValue(options.to) }],
               timingObject
             );
             animation.current.addEventListener("finish", callback.current);
@@ -74,7 +63,7 @@ export const useWebAnimation = ({
             reverse.current = !reverse.current;
             animation.current.reverse();
           } else if (animation.current) {
-            ref.current!.style[property as any] = getValue(reverse.current ? from : to);
+            ref.current!.style[options.property as any] = options.getValue(reverse.current ? options.from : options.to);
 
             if (onComplete) onComplete();
 
@@ -83,7 +72,7 @@ export const useWebAnimation = ({
           } else {
             timingObject.direction = reverse.current ? "reverse" : "normal";
             animation.current = ref.current!.animate(
-              [{ [property]: getValue(from) }, { [property]: getValue(to) }],
+              [{ [options.property]: options.getValue(options.from) }, { [options.property]: options.getValue(options.to) }],
               timingObject
             );
             animation.current.addEventListener("finish", callback.current);
@@ -93,12 +82,19 @@ export const useWebAnimation = ({
 
       callback.current();
     },
-    [delay, duration, easing, from, infinite, property, to]
+    [options.delay, options.duration, options.easing, options.from, options.infinite, options.property, options.to]
   );
 
   useLayoutEffect(() => {
-    if (!pause) animate();
-  }, [pause]);
+    if (!options.pause) animate();
+
+    if (options.pause && animation.current) {
+      animation.current.cancel();
+      if (animation.current && callback.current) {
+        animation.current.removeEventListener("finish", callback.current);
+      }
+    }
+  }, [options.pause]);
 
   useLayoutEffect(() => {
     return () => {
