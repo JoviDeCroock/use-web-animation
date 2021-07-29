@@ -1,9 +1,4 @@
-import {
-  useRef,
-  useLayoutEffect,
-  useCallback,
-  MutableRefObject,
-} from "react";
+import { useRef, useLayoutEffect, useCallback, MutableRefObject } from "react";
 
 export type AnimationOptions = {
   duration?: number;
@@ -11,23 +6,21 @@ export type AnimationOptions = {
   pause?: boolean;
   delay?: number;
   easing?: string;
-  from: number;
-  to: number;
-  getValue: (x: number) => string;
+  from: string;
+  to: string;
   property: string;
 };
 
-export const useWebAnimation = (options: AnimationOptions): [
-  MutableRefObject<HTMLElement | undefined>,
-  () => void
-] => {
+export const useWebAnimation = (
+  options: AnimationOptions
+): [MutableRefObject<HTMLElement | undefined>, () => void] => {
   const ref = useRef<HTMLElement>();
   const callback = useRef<any>();
   const animation = useRef<Animation | undefined>();
   const reverse = useRef(false);
 
   const animate = useCallback(
-    (onComplete?: (() => void)) => {
+    (onComplete?: () => void) => {
       if (!ref.current) {
         if (process.env.NODE_ENV !== "production") {
           throw new Error("Please apply the ref to a dom-element.");
@@ -36,9 +29,10 @@ export const useWebAnimation = (options: AnimationOptions): [
       }
 
       if (!ref.current.animate) {
-        ref.current!.style[options.property as any] = options.getValue(options.to);
+        ref.current!.style[options.property as any] = options.to;
         return;
       }
+
       const timingObject: KeyframeAnimationOptions = {
         duration: options.duration || 750,
         delay: options.delay,
@@ -49,11 +43,16 @@ export const useWebAnimation = (options: AnimationOptions): [
         if (options.infinite) {
           reverse.current = !reverse.current;
           if (animation.current) {
-            ref.current!.style[options.property as any] = options.getValue(reverse.current ? options.from : options.to);
+            ref.current!.style[options.property as any] = reverse.current
+              ? options.from
+              : options.to;
             animation.current.reverse();
           } else {
             animation.current = ref.current!.animate(
-              [{ [options.property]: options.getValue(options.from) }, { [options.property]: options.getValue(options.to) }],
+              [
+                { [options.property]: options.from },
+                { [options.property]: options.to }
+              ],
               timingObject
             );
             animation.current.addEventListener("finish", callback.current);
@@ -63,7 +62,9 @@ export const useWebAnimation = (options: AnimationOptions): [
             reverse.current = !reverse.current;
             animation.current.reverse();
           } else if (animation.current) {
-            ref.current!.style[options.property as any] = options.getValue(reverse.current ? options.from : options.to);
+            ref.current!.style[options.property as any] = reverse.current
+              ? options.from
+              : options.to;
 
             if (onComplete) onComplete();
 
@@ -72,7 +73,10 @@ export const useWebAnimation = (options: AnimationOptions): [
           } else {
             timingObject.direction = reverse.current ? "reverse" : "normal";
             animation.current = ref.current!.animate(
-              [{ [options.property]: options.getValue(options.from) }, { [options.property]: options.getValue(options.to) }],
+              [
+                { [options.property]: options.from },
+                { [options.property]: options.to }
+              ],
               timingObject
             );
             animation.current.addEventListener("finish", callback.current);
@@ -82,7 +86,15 @@ export const useWebAnimation = (options: AnimationOptions): [
 
       callback.current();
     },
-    [options.delay, options.duration, options.easing, options.from, options.infinite, options.property, options.to]
+    [
+      options.delay,
+      options.duration,
+      options.easing,
+      options.from,
+      options.infinite,
+      options.property,
+      options.to
+    ]
   );
 
   useLayoutEffect(() => {
@@ -105,7 +117,7 @@ export const useWebAnimation = (options: AnimationOptions): [
         }
       }
     };
-  }, [])
+  }, []);
 
   return [ref, animate];
 };
