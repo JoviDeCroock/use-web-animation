@@ -22,7 +22,6 @@ const RotatingAnimation = () => {
     to: 180,
     property: "transform",
     infinite: true,
-    getValue: (x) => `rotate(${x}deg)`
   });
 
   return (
@@ -51,9 +50,8 @@ type AnimationOptions = {
   pause?: boolean; // Start the animation out in a non-playing state
   delay?: number; // Delay before starting to animate
   easing?: string; // https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/easing
-  from: number; // The starting value
-  to: number; // The ending value
-  getValue: (x: number) => string; // Function used to inject the value for "from" and "to"
+  from: string; // The starting value
+  to: string; // The ending value
   property: string; // The property name
 };
 ```
